@@ -1,0 +1,31 @@
+trigger: none
+
+jobs:
+  - job: Cypress_e2e_tests
+    timeoutInMinutes: 360
+    # pool: 'SELFHOSTED'
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '12.x'
+        displayName: 'Install Node.js'
+
+      # Install Node dependencies
+      - script: npm ci
+        displayName: 'Install NPM dependencies'
+
+      - script: npm run cy:verify
+        displayName: 'Cypress verify'
+
+      - script: npm run cy:info
+        displayName: 'Cypress info'
+
+      - script: |
+          npx print-env AGENT
+          npx print-env BUILD
+          npx print-env SYSTEM
+          npm run start & npx cypress run
+        displayName: 'Run Cypress tests'
