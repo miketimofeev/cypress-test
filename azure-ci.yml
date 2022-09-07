@@ -3,9 +3,9 @@ trigger: none
 jobs:
   - job: Cypress_e2e_tests
     timeoutInMinutes: 360
-    # pool: 'SELFHOSTED'
-    pool:
-      vmImage: 'ubuntu-latest'
+    pool: 'alcheb'
+    #pool:
+      #vmImage: 'ubuntu-latest'
 
     steps:
       - task: NodeTool@0
